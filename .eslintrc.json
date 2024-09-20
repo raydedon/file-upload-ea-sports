@@ -1,3 +1,14 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    "no-undef": "error",
+    "quotes": ["error", "single"],
+    "object-curly-spacing": ["error", "always"],
+    "no-unused-vars": "warn"
+  },
+  "overrides": [
+    {
+      "files": [ "src/**/*.{ts,tsx}" ]
+    }
+  ]
 }
