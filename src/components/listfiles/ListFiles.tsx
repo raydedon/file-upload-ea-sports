@@ -28,7 +28,7 @@ const S3Files = async () => {
                                 height={50}
                             />
                         ) : (
-                            <FontAwesomeIcon icon={getFileIcon(file.mimeType as string)} size="sm" />
+                            <FontAwesomeIcon icon={getFileIcon(file.mimeType as string)} size="lg" />
                         )}
                     </div>
                     <div>{file.key}</div>
