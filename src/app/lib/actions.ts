@@ -23,14 +23,15 @@ export const listS3Files = async () => {
 
         // Return the list of files (objects) in the bucket
         const fileObjs =  await Promise.all((data.Contents || []).map(async (file) => {
-            const preSignedUrl = await createPreSignedUrlWithClient(process.env.AWS_S3_BUCKET_NAME, file.Key);
+            let preSignedUrl;
+            if(process.env.AWS_S3_BUCKET_NAME && file.Key) preSignedUrl = await createPreSignedUrlWithClient(process.env.AWS_S3_BUCKET_NAME, file.Key);
             const mimeType= lookup(file.Key || '');
             return {
                 key: file.Key,
                 size: file.Size,
                 lastModified: file.LastModified,
                 mimeType, // Get the MIME type of the file
-                url: preSignedUrl
+                ...(preSignedUrl && { preSignedUrl })
             }
         }));
 
@@ -63,7 +64,7 @@ export const fileUploadFormData = async (form: FormData) => {
     }
 }
 
-export const createPreSignedUrlWithClient = async (Bucket, Key) => {
+export const createPreSignedUrlWithClient = async (Bucket: string, Key: string) => {
     const command = new PutObjectCommand({ Bucket, Key });
     return await getSignedUrl(s3, command, { expiresIn: 360000 });
 };
