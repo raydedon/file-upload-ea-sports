@@ -31,7 +31,15 @@ const S3Files = async () => {
                             <FontAwesomeIcon icon={getFileIcon(file.mimeType as string)} size="lg" />
                         )}
                     </div>
-                    <div>{file.key}</div>
+                    <div>
+                        <a
+                            href={file?.preSignedUrl} // The URL for the file
+                            target="_blank" // Open in a new tab
+                            rel="noopener noreferrer" // Security measure
+                            className="text-blue-500 underline hover:text-blue-700">
+                            {file.key}
+                        </a>
+                    </div>
                     <div>{(file.size! / 1024).toFixed(2)} KB</div>
                     <div>{new Date(file.lastModified!).toLocaleDateString()}</div>
                 </div>
