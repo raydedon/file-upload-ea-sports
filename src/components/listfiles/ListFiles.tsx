@@ -19,9 +19,9 @@ const S3Files = async () => {
             {fileList.map((file, index) => (
                 <div key={index} className="grid grid-cols-4 gap-4 border-b border-gray-200 p-2 items-center">
                     <div>
-                        {(file.mimeType as string).startsWith('image/') ? (
+                        {(file?.mimeType as string)?.startsWith('image/') ? (
                             <Image
-                                src={`https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.key}`}
+                                src={file?.url}
                                 alt={file.key!}
                                 className="w-12 h-12 object-cover rounded"
                                 width={50}
