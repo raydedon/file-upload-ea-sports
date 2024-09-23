@@ -1,6 +1,6 @@
 'use server'
 
-import { ListObjectsV2Command, PutObjectCommand, S3Client, } from '@aws-sdk/client-s3';
+import { GetObjectCommand, ListObjectsV2Command, PutObjectCommand, S3Client, } from '@aws-sdk/client-s3';
 import { lookup } from 'mime-types'; // to get MIME types from file extensions
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
@@ -65,6 +65,6 @@ export const fileUploadFormData = async (form: FormData) => {
 }
 
 export const createPreSignedUrlWithClient = async (Bucket: string, Key: string) => {
-    const command = new PutObjectCommand({ Bucket, Key });
+    const command = new GetObjectCommand({ Bucket, Key });
     return await getSignedUrl(s3, command, { expiresIn: 360000 });
 };
