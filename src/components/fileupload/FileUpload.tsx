@@ -6,7 +6,7 @@ import { fileUploadFormData } from '../../app/lib/actions';
 
 const FileUpload = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState<string>();
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -15,7 +15,7 @@ const FileUpload = () => {
                 setErrorMessage('File size exceeds the 5MB limit');
                 setSelectedFile(null); // Reset the selected file
             } else {
-                setErrorMessage('');
+                setErrorMessage(undefined);
                 setSelectedFile(file);
             }
         }
