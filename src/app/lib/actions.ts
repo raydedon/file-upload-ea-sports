@@ -22,7 +22,7 @@ export const listS3Files = async () => {
         const data = await s3.send(command);
 
         // Return the list of files (objects) in the bucket
-        const fileObjs =  await Promise.all((data.Contents || []).map(async (file) => {
+        return   await Promise.all((data.Contents || []).map(async (file) => {
             let preSignedUrl;
             if(process.env.AWS_S3_BUCKET_NAME && file.Key) preSignedUrl = await createPreSignedUrlWithClient(process.env.AWS_S3_BUCKET_NAME, file.Key);
             const mimeType= lookup(file.Key || '');
@@ -34,11 +34,6 @@ export const listS3Files = async () => {
                 ...(preSignedUrl && { preSignedUrl })
             }
         }));
-
-        console.log('print array of fileObjs');
-        console.log(fileObjs);
-
-        return fileObjs;
     } catch (error) {
         console.error('Error fetching files from S3:', error);
         return [];
