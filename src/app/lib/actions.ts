@@ -3,6 +3,7 @@
 import { GetObjectCommand, ListObjectsV2Command, PutObjectCommand, S3Client, } from '@aws-sdk/client-s3';
 import { lookup } from 'mime-types'; // to get MIME types from file extensions
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { cookies } from 'next/headers';
 
 const s3 = new S3Client({
     region: process.env.AWS_REGION,
@@ -38,6 +39,11 @@ export const listS3Files = async () => {
         console.error('Error fetching files from S3:', error);
         return [];
     }
+}
+
+export const listS3FilesCacheMiss = async () => {
+    const _cookies = cookies();
+    return listS3Files();
 }
 
 export const fileUploadFormData = async (form: FormData) => {

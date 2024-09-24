@@ -1,10 +1,10 @@
-import { listS3Files } from '../../app/lib/actions';
+import { listS3FilesCacheMiss } from '../../app/lib/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getFileIcon } from '../../utils/utils';
 import Image from 'next/image';
 
 const S3Files = async () => {
-    const fileList = await listS3Files();
+    const fileList = await listS3FilesCacheMiss();
 
     return (
         <div className="container mx-auto p-4">
